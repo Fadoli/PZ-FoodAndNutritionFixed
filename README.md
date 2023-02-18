@@ -1,2 +1,3 @@
 # PZ-FoodAndNutritionFixed
-This mod will try to attempt to fix several issues : foods item values, and make player's calories tends to 0
+
+The goal of this project is to create make foods item more accurates, as well as fix high/low calories values dragging the weight up/down without being changed.
