@@ -101,6 +101,7 @@ module farming
         ThirstChange	    =	    -4,
 		DaysFresh 			=		14,
 		DaysTotallyRotten 	=	 	28,
+		DangerousUncooked   = true,
         EvolvedRecipe       =       Omelette:9;Soup:18;Stew:18;Pie:18;Stir fry Griddle Pan:18;Stir fry:18;Salad:9;Roasted Vegetables:18,
         FoodType    =   Vegetables,
         Carbohydrates = 25.05,
