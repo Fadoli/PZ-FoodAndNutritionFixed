@@ -1,12 +1,12 @@
 module Base
 {
-    recipe Slice Onion
-    {
-        Onion,
-        keep [Recipe.GetItemTypes.SharpKnife]/MeatCleaver,
-        Result:OnionRings=4,
-        Time:70.0,
-        Category:Cooking,
-        OnGiveXP:Recipe.OnGiveXP.Cooking3,
-    }
+	recipe Slice Onion
+	{
+		Onion,
+		keep [Recipe.GetItemTypes.SharpKnife]/MeatCleaver,
+		Result:OnionRings=4,
+		Time:70.0,
+		Category:Cooking,
+		OnGiveXP:Recipe.OnGiveXP.Cooking3,
+	}
 }
