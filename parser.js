@@ -1,6 +1,33 @@
 const fs = require("fs");
 
 /**
+ * @description Parse an evolved recipe list into a js object
+ * @param {string} value 
+ * @returns {object} 
+ */
+function parseEvolvedRecipe(value) {
+    let output = {};
+    // Name1:Value1;Name2:Value2
+    value.split(';').forEach((element) => {
+        const splited = element.split(":");
+        output[splited[0].trim()]=parseInt(splited[1].trim(),10);
+    })
+    return output;
+}
+/**
+ * @description Stringify an evolved recipe list into
+ * @param {object} value
+ * @returns {string} 
+ */
+function stringifyEvolvedRecipe(value) {
+    let output = [];
+    for (const key in value) {
+        output.push(`${key}:${value[key]}`)
+    }
+    return output.join(';');
+}
+
+/**
  * Parse .txt script file to js
  * @param {string} content
  * @returns {Object}
@@ -30,7 +57,7 @@ function toJS(content) {
         if (line === '}') {
             // Handling of recipes
             if (current?.EvolvedRecipe) {
-
+                current.EvolvedRecipe = parseEvolvedRecipe(current.EvolvedRecipe);
             }
             current = definitions.pop();
             newCurrent = undefined;
@@ -69,7 +96,8 @@ function toJS(content) {
         if (line.indexOf('=') !== -1) {
             const newSpilt = line.split('=');
             const key = newSpilt[0].trim();
-            const value = newSpilt[1].split(',')[0].trim();
+            let rawValue = newSpilt[1].split(',')[0].trim();
+            let value = Number.parseFloat(rawValue) || rawValue;
             current[key] = value;
         }
     })
@@ -100,7 +128,11 @@ function toScript(content, prefix = '') {
             output.push(...toScript(element, `${addToPrefix}${prefix}`));
             output.push(`${prefix}}`);
         } else {
-            output.push(`${prefix}${key} = ${element},`);
+            if (key === 'EvolvedRecipe') {
+                output.push(`${prefix}${key} = ${stringifyEvolvedRecipe(element)},`);
+            }else{
+                output.push(`${prefix}${key} = ${element},`);
+            }
         }
     });
     if (prefix) {
