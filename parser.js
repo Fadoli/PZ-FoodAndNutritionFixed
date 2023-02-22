@@ -167,7 +167,33 @@ function comparePatch(base,moded) {
     return undefined;
 }
 
-/*
+
+/**
+ * @typedef {Object} itemDefinition
+ * @property {string} [itemDefinition.Type]
+ * @property {number} [itemDefinition.HungerChange]
+ * @property {number} [itemDefinition.ThirstChange]
+ * @property {number} [itemDefinition.Weight]
+ * @property {number} [itemDefinition.Carbohydrates]
+ * @property {number} [itemDefinition.Proteins]
+ * @property {number} [itemDefinition.Lipids]
+ * @property {number} [itemDefinition.Calories]
+ * @property {number} [itemDefinition.DaysFresh]
+ * @property {number} [itemDefinition.DaysTotallyRotten]
+ */
+
+const scalableProperties = ['HungerChange', 'ThirstChange', 'Carbohydrates', 'Proteins', 'Lipids', 'Calories']
+/**
+ * @description Scale items property to match new weight
+ * @param {itemDefinition} item 
+ * @param {numbre} newWeight
+ */
+function scaleItemWeight(item, newWeight) {
+    const scale = newWeight / item.Weight;
+    scalableProperties.forEach((property) => {
+        item[property] *= scale;
+    })
+}
 const converted = toJS(fs.readFileSync('./media/scripts/farming.txt', 'utf8'))
 console.log(converted);
 const back = toScript(converted)
