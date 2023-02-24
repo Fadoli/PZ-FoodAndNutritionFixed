@@ -13,6 +13,7 @@ module farming
 		Icon				=		TZ_BloomingBroccoli,
 		Weight				=		0.1,
 		HungerChange 		=		-10,
+		FoodType    =   Vegetables,
 		DaysFresh 			=		4,
 		DaysTotallyRotten 	=	 	7,
         Carbohydrates = 1.7,

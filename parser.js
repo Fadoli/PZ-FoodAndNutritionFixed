@@ -1,5 +1,89 @@
 const fs = require("fs");
 
+
+/**
+ * @typedef {Object} itemDefinition
+ * @property {string} [itemDefinition.Type]
+ * @property {string} [itemDefinition.FoodType]
+ * @property {string} [itemDefinition.EvolvedRecipeName]
+ * @property {boolean} [itemDefinition.Packaged] Are nutrition element labeled ?
+ * @property {boolean} [itemDefinition.CannedFood] Is it in a can ?
+ * @property {boolean} [itemDefinition.Alcoholic] Does it have alcohol ?
+ * @property {boolean} [itemDefinition.Spice] Is it a spice
+ * @property {boolean} [itemDefinition.IsCookable] Is it cookable
+ * @property {boolean} [itemDefinition.BadInMicrowave] Is it bad when it gets thrown in a microwave
+ * @property {boolean} [itemDefinition.BadCold] Is it bad when cold
+ * @property {boolean} [itemDefinition.GoodHot] Is it better when hot
+ * @property {number} [itemDefinition.HungerChange]
+ * @property {number} [itemDefinition.ThirstChange]
+ * @property {number} [itemDefinition.Weight]
+ * @property {number} [itemDefinition.Carbohydrates]
+ * @property {number} [itemDefinition.Proteins]
+ * @property {number} [itemDefinition.Lipids]
+ * @property {number} [itemDefinition.Calories]
+ * @property {number} [itemDefinition.DaysFresh]
+ * @property {number} [itemDefinition.DaysTotallyRotten]
+ */
+
+const CONSTANTS = {
+    types: ['module', 'item', 'recipe'],
+    FoodTypeConfig: {
+        'Vegetables': {
+
+        },
+        'Grains': {
+
+        },
+        'Fruits': {
+
+        },
+        'Berry': {
+
+        },
+        'Meats': {
+
+        },
+        'Fish': {
+
+        },
+        'Mushroom': {
+
+        },
+        'Egg': {
+
+        },
+        'Cheese':  {
+
+        },
+        'Treats':  {
+
+        },
+        'Drinks':  {
+            
+        },
+        'Candys':  {
+            
+        }
+    },
+    FoodType: [
+        'Greens', 'Herb', 'Vegetables',
+        'Fruits', 'Berry', 'Juice',
+        'Citrus', 'HotPepper',
+        'Bean', 'Seed', 'Nut',
+        'Oil',
+        'Mushroom',
+        'Rice', 'Pasta', 'Poultry', 'Bread',
+        'Sugar', 'Candy', 'Chocolate', 'Cocoa', 'Stock',
+        'Fish', 'Seafood',
+        'Meat', 'Game', 'Beef', 'Sausage', 'Bacon',
+        'Egg',
+        'Cheese',
+        'SoftDrink', 'Coffee', 'Beer', 'Wine',
+        'NoExplicit'
+    ],
+    scalableProperties: ['HungerChange', 'ThirstChange', 'Carbohydrates', 'Proteins', 'Lipids', 'Calories'],
+}
+
 /**
  * @description Parse an evolved recipe list into a js object
  * @param {string} value 
@@ -35,7 +119,6 @@ function stringifyEvolvedRecipe(value) {
 function toJS(content) {
     const output = {};
     const splited = content.split('\n');
-    const types = ['module', 'item', 'recipe']
     const definitions = [];
 
     let current = output;
@@ -65,7 +148,7 @@ function toJS(content) {
         }
         // Handle new entries
         let newEntry = false;
-        for (const type of types) {
+        for (const type of CONSTANTS.types) {
             if (line.startsWith(type)) {
                 newCurrent = {
                     __type__: type
@@ -98,6 +181,11 @@ function toJS(content) {
             const key = newSpilt[0].trim();
             let rawValue = newSpilt[1].split(',')[0].trim();
             let value = Number.parseFloat(rawValue) || rawValue;
+            if (rawValue.toLocaleLowerCase() === 'true') {
+                value = true;
+            } else if (rawValue.toLocaleLowerCase() === 'false') {
+                value = false;
+            }
             current[key] = value;
         }
     })
@@ -130,7 +218,7 @@ function toScript(content, prefix = '') {
         } else {
             if (key === 'EvolvedRecipe') {
                 output.push(`${prefix}${key} = ${stringifyEvolvedRecipe(element)},`);
-            }else{
+            } else {
                 output.push(`${prefix}${key} = ${element},`);
             }
         }
@@ -167,22 +255,6 @@ function comparePatch(base,moded) {
     return undefined;
 }
 
-
-/**
- * @typedef {Object} itemDefinition
- * @property {string} [itemDefinition.Type]
- * @property {number} [itemDefinition.HungerChange]
- * @property {number} [itemDefinition.ThirstChange]
- * @property {number} [itemDefinition.Weight]
- * @property {number} [itemDefinition.Carbohydrates]
- * @property {number} [itemDefinition.Proteins]
- * @property {number} [itemDefinition.Lipids]
- * @property {number} [itemDefinition.Calories]
- * @property {number} [itemDefinition.DaysFresh]
- * @property {number} [itemDefinition.DaysTotallyRotten]
- */
-
-const scalableProperties = ['HungerChange', 'ThirstChange', 'Carbohydrates', 'Proteins', 'Lipids', 'Calories']
 /**
  * @description Scale items property to match new weight
  * @param {itemDefinition} item 
@@ -190,21 +262,34 @@ const scalableProperties = ['HungerChange', 'ThirstChange', 'Carbohydrates', 'Pr
  */
 function scaleItemWeight(item, newWeight) {
     const scale = newWeight / item.Weight;
-    scalableProperties.forEach((property) => {
+    CONSTANTS.scalableProperties.forEach((property) => {
         item[property] *= scale;
     })
 }
+
+//*
 const converted = toJS(fs.readFileSync('./media/scripts/farming.txt', 'utf8'))
 console.log(converted);
 const back = toScript(converted)
-console.log(back);
 fs.writeFileSync('output.txt', back);
-*/
+//*/
 
-const filesToCheck = ['farming.txt', 'items_food.txt'];
+/*
+const filesToCheck =  ['farming.txt'] // ['farming.txt', 'items_food.txt'];
 
 for (const file of filesToCheck) {
     const orig = toJS(fs.readFileSync('./originals/'+file, 'utf8'))
     const moded = toJS(fs.readFileSync('./media/scripts/'+file, 'utf8'))
-    fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig,moded),null,4));
+    // fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig,moded),null,4));
+
+    const moduleName = Object.keys(moded)[0];
+    const handler = moded[moduleName];
+    for (const elementName in handler) {
+        const element = handler[elementName];
+        if (element.__type__ === 'item' && element.Type === 'Food') {
+            console.log(elementName)
+            console.log(-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight)
+        }
+    }
 }
+//*/
