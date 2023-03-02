@@ -52,17 +52,17 @@ const CONSTANTS = {
         'Egg': {
 
         },
-        'Cheese':  {
+        'Cheese': {
 
         },
-        'Treats':  {
+        'Treats': {
 
         },
-        'Drinks':  {
-            
+        'Drinks': {
+
         },
-        'Candys':  {
-            
+        'Candys': {
+
         }
     },
     FoodType: [
@@ -94,7 +94,7 @@ function parseEvolvedRecipe(value) {
     // Name1:Value1;Name2:Value2
     value.split(';').forEach((element) => {
         const splited = element.split(":");
-        output[splited[0].trim()]=parseInt(splited[1].trim(),10);
+        output[splited[0].trim()] = parseInt(splited[1].trim(), 10);
     })
     return output;
 }
@@ -195,7 +195,7 @@ function toJS(content) {
 function toScript(content, prefix = '') {
     let output = [];
     const addToPrefix = '\t';
-    Object.keys(content).forEach((key)=> {
+    Object.keys(content).forEach((key) => {
         // skip internal stuff
         if (key.startsWith('__')) {
             return;
@@ -229,7 +229,7 @@ function toScript(content, prefix = '') {
     return output.join('\n');
 }
 
-function comparePatch(base,moded) {
+function comparePatch(base, moded) {
     let output = {};
     let hadDif = false;
     Object.keys(moded).forEach((key) => {
@@ -267,29 +267,51 @@ function scaleItemWeight(item, newWeight) {
     })
 }
 
-//*
+/*
 const converted = toJS(fs.readFileSync('./media/scripts/farming.txt', 'utf8'))
 console.log(converted);
 const back = toScript(converted)
 fs.writeFileSync('output.txt', back);
 //*/
 
-/*
-const filesToCheck =  ['farming.txt'] // ['farming.txt', 'items_food.txt'];
-
+//*
+const filesToCheck = ['farming.txt', 'items_food.txt'];
+let output = {};
 for (const file of filesToCheck) {
-    const orig = toJS(fs.readFileSync('./originals/'+file, 'utf8'))
-    const moded = toJS(fs.readFileSync('./media/scripts/'+file, 'utf8'))
+    const orig = toJS(fs.readFileSync('./originals/' + file, 'utf8'))
+    const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
     // fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig,moded),null,4));
 
-    const moduleName = Object.keys(moded)[0];
+    const moduleName = Object.keys(orig)[0];
+    output[moduleName] = output[moduleName] || {};
+    let current = output[moduleName];
+
+    console.log("Originals")
+
+    let name = `Originals`;
+    const handlerOrig = orig[moduleName];
+    for (const elementName in handlerOrig) {
+        const element = handlerOrig[elementName];
+        if (element.__type__ === 'item' && element.Type === 'Food') {
+            current[elementName] = current[elementName] || {};
+            current[elementName][name] = (-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight);
+        }
+    }
+
+    console.log("Modded")
+    name = `Modded`;
     const handler = moded[moduleName];
+    current = output[moduleName];
     for (const elementName in handler) {
         const element = handler[elementName];
         if (element.__type__ === 'item' && element.Type === 'Food') {
-            console.log(elementName)
-            console.log(-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight)
+            current[elementName] = current[elementName] || {};
+            current[elementName][name] = (-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight);
         }
     }
+
+    // Order
+    output[moduleName] = Object.fromEntries(Object.entries(output[moduleName]).sort())
 }
+console.log(output);
 //*/

@@ -155,6 +155,32 @@ module farming
 		WorldStaticModel = Salad_Ground,
 	}
 
+    item MayonnaiseFull
+	{
+	    DisplayCategory = Food,
+		Type				=		Food,
+		DisplayName			=		Mayonnaise,
+		Icon				=		TZ_MayonnaiseFull,
+		Weight				=		0.5,
+		HungerChange 		=		-50,
+		BoredomChange 		=		10,
+		UnhappyChange 		=		5,
+		DaysFresh 			=		10,
+		DaysTotallyRotten 	=	 	13,
+		ReplaceOnUse 	    = 		MayonnaiseEmpty,
+		EvolvedRecipe       =       Sandwich:3;Sandwich Baguette:3;Burger:3;Salad:3;RicePot:3;RicePan:3;PastaPot:3;PastaPan:3;Taco:3;Burrito:3,
+		Spice   =   true,
+        Carbohydrates = 9.5,
+        Proteins = 7.5,
+        Lipids = 400,
+        Calories = 3635,
+        Packaged = TRUE,
+        EatType = candrink,
+        StaticModel = MayoJar,
+        WorldStaticModel = MayoJar_Ground,
+		FoodType = NoExplicit,
+	}
+    
 /**********************************************************************/
 /******************************Seeds***************************************/
 /**********************************************************************/
