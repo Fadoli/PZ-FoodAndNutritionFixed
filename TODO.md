@@ -1,6 +1,6 @@
 # TODO
 
-Fish values should be /2 to take into account loss due to wastes
+Fish values should be -30% to take into account loss due to wastes
 
 ## Parser / Exporter
 
