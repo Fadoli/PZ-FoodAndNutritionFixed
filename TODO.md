@@ -1,5 +1,7 @@
 # TODO
 
+Fish values should be /2 to take into account loss due to wastes
+
 ## Parser / Exporter
 
 Make tools to automate some stuff in JS, this needs full export / import to work
