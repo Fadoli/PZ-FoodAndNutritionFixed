@@ -3629,6 +3629,60 @@ item Pancakes
 		Tags = MinorIngredient,
 	}
 
+	item BagelPlain
+	{
+		DisplayName = Bagel,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 0.1,
+		Icon = BagelPlain,
+		DaysFresh = 2,
+		DaysTotallyRotten = 8,
+		HungerChange = -14,
+		Calories = 275,
+		Carbohydrates = 53,
+		Lipids = 2,
+		Proteins = 8,
+		WorldStaticModel = Bagel_Ground,
+		Tags = FitsToaster,
+	}
+
+	item BagelPoppy
+	{
+		DisplayName = Poppy Bagel,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 0.1,
+		Icon = BagelPoppy,
+		DaysFresh = 2,
+		DaysTotallyRotten = 8,
+		HungerChange = -14,
+		Calories = 275,
+		Carbohydrates = 53,
+		Lipids = 2,
+		Proteins = 8,
+		WorldStaticModel = BagelPoppy_Ground,
+		Tags = FitsToaster,
+	}
+
+	item BagelSesame
+	{
+		DisplayName = Sesame Bagel,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 0.1,
+		Icon = BagelSesame,
+		DaysFresh = 2,
+		DaysTotallyRotten = 8,
+		HungerChange = -14,
+		Calories = 275,
+		Carbohydrates = 53,
+		Lipids = 2,
+		Proteins = 8,
+		WorldStaticModel = BagelSesame_Ground,
+		Tags = FitsToaster,
+	}
+
 	item BaguetteDough 
 	{
 		DisplayName = Baguette,
