@@ -223,6 +223,7 @@ function toScript(content, prefix = '') {
             }
             output.push(...toScript(element, `${addToPrefix}${prefix}`));
             output.push(`${prefix}}`);
+            output.push(``);
         } else {
             if (key === 'EvolvedRecipe') {
                 output.push(`${prefix}${key} = ${stringifyEvolvedRecipe(element)},`);
@@ -299,7 +300,7 @@ for (const file of filesToCheck) {
         const element = handler[elementName];
         if (element.__type__ === 'item' && element.Type === 'Food' && element.EvolvedRecipe) {
             Object.keys(element.EvolvedRecipe).forEach((recipe) => {
-                element.EvolvedRecipe[recipe] = Math.min(element.HungerChange, CONSTANTS.FoodTypeConfig[element.FoodType][recipe]);
+                element.EvolvedRecipe[recipe] = Math.min(-element.HungerChange, CONSTANTS.FoodTypeConfig[element.FoodType][recipe]);
             })
         }
     }
