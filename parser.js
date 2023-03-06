@@ -42,53 +42,7 @@ const fs = require("fs");
 
 const CONSTANTS = {
     types: ['module', 'item', 'recipe'],
-    FoodTypeConfig: {
-        'Vegetables': {
-
-        },
-        'Grains': {
-
-        },
-        'Fruits': {
-
-        },
-        'Berry': {
-
-        },
-        'Oil': {
-
-        },
-        'JamLike': {
-
-        },
-        'Seasoning': {
-
-        },
-        'Meats': {
-
-        },
-        'Fish': {
-
-        },
-        'Mushroom': {
-
-        },
-        'Egg': {
-
-        },
-        'Cheese': {
-
-        },
-        'Treats': {
-
-        },
-        'Bread': {
-
-        },
-        'Drinks': {
-
-        }
-    },
+    FoodTypeConfig: require('./typeToRecipes.json'),
     FoodTypeToConfigMap: {
         Greens: 'Vegetables',
         Herb: 'Vegetables',
@@ -335,25 +289,39 @@ fs.writeFileSync('output.txt', back);
 //*/
 
 //*
+const filesToCheck = ['farming.txt', 'items_food.txt'];
+
+for (const file of filesToCheck) {
+    const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
+    const moduleName = Object.keys(moded)[0];
+    const handler = moded[moduleName];
+    for (const elementName in handler) {
+        const element = handler[elementName];
+        if (element.__type__ === 'item' && element.Type === 'Food' && element.EvolvedRecipe) {
+            Object.keys(element.EvolvedRecipe).forEach((recipe) => {
+                element.EvolvedRecipe[recipe] = Math.min(element.HungerChange, CONSTANTS.FoodTypeConfig[element.FoodType][recipe]);
+            })
+        }
+    }
+    fs.writeFileSync('./media/scripts/patched_' + file, toScript(moded), 'utf8');
+}
+return;
+
 const recipes = {};
 const typesToRecipes = {};
-
-const filesToCheck = ['farming.txt', 'items_food.txt'];
 let output = {};
 for (const file of filesToCheck) {
     const orig = toJS(fs.readFileSync('./originals/' + file, 'utf8'))
     const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
     // Compare patched content with original
-    /*
-    fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig, moded), null, 4));
-    //*/
+    // fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig, moded), null, 4));
     const moduleName = Object.keys(orig)[0];
     output[moduleName] = output[moduleName] || {};
     let current = output[moduleName];
 
 
     // List recipes
-    //*
+    /*
     const handler = moded[moduleName];
     for (const elementName in handler) {
         const element = handler[elementName];
@@ -361,9 +329,9 @@ for (const file of filesToCheck) {
             const oldType = element.FoodType;
             const myNewType = CONSTANTS.FoodTypeToConfigMap[element.FoodType];
             typesToRecipes[oldType] = typesToRecipes[oldType] || {};
-            const HungerToWeight = (value) => {
-                return - element.Weight * Math.min(value, -element.HungerChange) / element.HungerChange
-            }
+            // const HungerToWeight = (value) => {
+            //     return - element.Weight * Math.min(value, -element.HungerChange) / element.HungerChange
+            // }
 
             Object.keys(element.EvolvedRecipe).forEach((recipe) => {
                 const HungerInRecipe = element.EvolvedRecipe[recipe];
@@ -378,10 +346,14 @@ for (const file of filesToCheck) {
                     process.exit(0);
                 }
                 if (!typesToRecipes[oldType][recipe]) {
-                    typesToRecipes[oldType][recipe] = [];
+                    typesToRecipes[oldType][recipe] = 0;
+                    // typesToRecipes[oldType][recipe] = [];
                 }
                 recipes[recipe][oldType] = true
-                typesToRecipes[oldType][recipe].push(HungerToWeight(HungerInRecipe))
+                if (HungerInRecipe > typesToRecipes[oldType][recipe]) {
+                    typesToRecipes[oldType][recipe] = HungerInRecipe
+                    // typesToRecipes[oldType][recipe].push(HungerInRecipe)
+                }
             })
         }
     }
@@ -416,6 +388,6 @@ for (const file of filesToCheck) {
 }
 //console.log(Object.fromEntries(Object.entries(recipes).sort()));
 // console.log(Object.fromEntries(Object.entries(typesToRecipes).sort()));
-fs.writeFileSync('output.txt', JSON.stringify(Object.fromEntries(Object.entries(typesToRecipes).sort()), null, 4));
+//fs.writeFileSync('output.txt', JSON.stringify(Object.fromEntries(Object.entries(typesToRecipes).sort()), null, 4));
 console.log(output);
 //*/
