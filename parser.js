@@ -228,7 +228,13 @@ function toScript(content, prefix = '') {
             if (key === 'EvolvedRecipe') {
                 output.push(`${prefix}${key} = ${stringifyEvolvedRecipe(element)},`);
             } else {
-                output.push(`${prefix}${key} = ${element},`);
+                let newElement = element;
+                if (element === true) {
+                    newElement = 'TRUE';
+                } else if (element === false) {
+                    newElement = 'FALSE';
+                }
+                output.push(`${prefix}${key} = ${newElement},`);
             }
         }
     });
@@ -304,6 +310,7 @@ for (const file of filesToCheck) {
             })
         }
     }
+    // moded[moduleName] = Object.fromEntries(Object.entries(moded[moduleName]).sort())
     fs.writeFileSync('./media/scripts/patched_' + file, toScript(moded), 'utf8');
 }
 return;
