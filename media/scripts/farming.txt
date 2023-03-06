@@ -153,6 +153,7 @@ module farming
 		StaticModel			=		Bowl,
 		EatType				=		2hand,
 		WorldStaticModel = Salad_Ground,
+		FoodType    =   Vegetables,
 	}
 
     item MayonnaiseFull

@@ -9,4 +9,52 @@ module Base
 		Category:Cooking,
 		OnGiveXP:Recipe.OnGiveXP.Cooking3,
 	}
+
+	recipe Place Pasta in Saucepan
+	{
+	   Pasta;20,
+	   destroy WaterSaucepan,
+
+	   Result:WaterSaucepanPasta,
+	   Time:50.0,
+	   OnCreate:Recipe.OnCreate.AddBaseIngredientToCookingVessel,
+	   Category:Cooking,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	}
+
+	recipe Place Rice in Saucepan
+	{
+	   Rice;20,
+	   destroy WaterSaucepan,
+
+	   Result:WaterSaucepanRice,
+	   Time:50.0,
+	   OnCreate:Recipe.OnCreate.AddBaseIngredientToCookingVessel,
+	   Category:Cooking,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	}
+
+    recipe Place Pasta in Cooking Pot
+	{
+	   Pasta;20,
+	   destroy WaterPot,
+
+	   Result:WaterPotPasta,
+	   Time:50.0,
+	   OnCreate:Recipe.OnCreate.AddBaseIngredientToCookingVessel,
+	   Category:Cooking,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	}
+
+	recipe Place Rice in Cooking Pot
+	{
+	   Rice;20,
+	   destroy WaterPot,
+
+	   Result:WaterPotRice,
+	   Time:50.0,
+	   OnCreate:Recipe.OnCreate.AddBaseIngredientToCookingVessel,
+	   Category:Cooking,
+	   OnGiveXP:Recipe.OnGiveXP.None,
+	}
 }

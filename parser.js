@@ -1,8 +1,16 @@
 const fs = require("fs");
 
+/**
+ * @typedef {Object.<string,module>} Script
+ */
+
+/**
+ * @typedef {Object.<string,itemDefinition>} module
+ */
 
 /**
  * @typedef {Object} itemDefinition
+ * @property {string} itemDefinition.__type__ Internal value
  * @property {string} [itemDefinition.Type]
  * @property {string} [itemDefinition.FoodType]
  * @property {string} [itemDefinition.EvolvedRecipeName]
@@ -23,6 +31,13 @@ const fs = require("fs");
  * @property {number} [itemDefinition.Calories]
  * @property {number} [itemDefinition.DaysFresh]
  * @property {number} [itemDefinition.DaysTotallyRotten]
+ * @property {Object.<string,number>} [itemDefinition.EvolvedRecipe]
+ */
+
+/**
+ * @typedef {Object} recipeDefinition
+ * @property {string} itemDefinition.__type__ Internal value
+ * @property {string} [itemDefinition.__unparsed__]
  */
 
 const CONSTANTS = {
@@ -120,7 +135,7 @@ const CONSTANTS = {
 /**
  * @description Parse an evolved recipe list into a js object
  * @param {string} value 
- * @returns {object} 
+ * @returns {object.<string,number>} 
  */
 function parseEvolvedRecipe(value) {
     let output = {};
@@ -147,7 +162,7 @@ function stringifyEvolvedRecipe(value) {
 /**
  * Parse .txt script file to js
  * @param {string} content
- * @returns {Object}
+ * @returns {Script}
  */
 function toJS(content) {
     const output = {};
@@ -225,6 +240,12 @@ function toJS(content) {
     return output;
 }
 
+/**
+ *
+ * @param {Script} content
+ * @param {string} [prefix='']
+ * @return {string} 
+ */
 function toScript(content, prefix = '') {
     let output = [];
     const addToPrefix = '\t';
@@ -264,8 +285,8 @@ function toScript(content, prefix = '') {
 
 /**
  * @description Compare patched/raw files and make a diff
- * @param {*} base
- * @param {*} moded
+ * @param {Script} base
+ * @param {Script} moded
  * @return {*} 
  */
 function comparePatch(base, moded) {
@@ -337,12 +358,17 @@ for (const file of filesToCheck) {
     for (const elementName in handler) {
         const element = handler[elementName];
         if (element.__type__ === 'item' && element.Type === 'Food' && element.EvolvedRecipe) {
-            Object.keys(element.EvolvedRecipe).forEach((recipe) => {
-                const oldType = element.FoodType;
-                const myNewType = CONSTANTS.FoodTypeToConfigMap[element.FoodType];
+            const oldType = element.FoodType;
+            const myNewType = CONSTANTS.FoodTypeToConfigMap[element.FoodType];
+            typesToRecipes[oldType] = typesToRecipes[oldType] || {};
+            const HungerToWeight = (value) => {
+                return - element.Weight * Math.min(value, -element.HungerChange) / element.HungerChange
+            }
 
+            Object.keys(element.EvolvedRecipe).forEach((recipe) => {
+                const HungerInRecipe = element.EvolvedRecipe[recipe];
                 recipes[recipe] = recipes[recipe] || {};
-                typesToRecipes[oldType] = typesToRecipes[oldType] || {};
+
 
                 if (!myNewType) {
                     if (!element.FoodType) {
@@ -351,8 +377,11 @@ for (const file of filesToCheck) {
                     console.log(element.FoodType);
                     process.exit(0);
                 }
+                if (!typesToRecipes[oldType][recipe]) {
+                    typesToRecipes[oldType][recipe] = [];
+                }
                 recipes[recipe][oldType] = true
-                typesToRecipes[oldType][recipe] = true
+                typesToRecipes[oldType][recipe].push(HungerToWeight(HungerInRecipe))
             })
         }
     }
@@ -369,7 +398,7 @@ for (const file of filesToCheck) {
             current[elementName][name] = (-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight);
         }
     }
-
+    
     name = `Modded`;
     const handler = moded[moduleName];
     current = output[moduleName];
@@ -385,7 +414,8 @@ for (const file of filesToCheck) {
     // Order
     output[moduleName] = Object.fromEntries(Object.entries(output[moduleName]).sort())
 }
-console.log(Object.fromEntries(Object.entries(recipes).sort()));
-console.log(Object.fromEntries(Object.entries(typesToRecipes).sort()));
+//console.log(Object.fromEntries(Object.entries(recipes).sort()));
+// console.log(Object.fromEntries(Object.entries(typesToRecipes).sort()));
+fs.writeFileSync('output.txt', JSON.stringify(Object.fromEntries(Object.entries(typesToRecipes).sort()), null, 4));
 console.log(output);
 //*/
