@@ -255,7 +255,7 @@ function comparePatch(base, moded) {
     let hadDif = false;
     Object.keys(moded).forEach((key) => {
         const modedValue = moded[key];
-        const baseValue = base[key];
+        const baseValue = base?.[key];
         if (typeof modedValue === 'object') {
             let dif = comparePatch(baseValue, modedValue);
             if (dif) {
@@ -295,9 +295,10 @@ const back = toScript(converted)
 fs.writeFileSync('output.txt', back);
 //*/
 
-//*
 const filesToCheck = ['farming.txt', 'items_food.txt'];
 
+// Auto fill values
+/*
 for (const file of filesToCheck) {
     const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
     const moduleName = Object.keys(moded)[0];
@@ -314,6 +315,7 @@ for (const file of filesToCheck) {
     fs.writeFileSync('./media/scripts/patched_' + file, toScript(moded), 'utf8');
 }
 return;
+//*/
 
 const recipes = {};
 const typesToRecipes = {};
