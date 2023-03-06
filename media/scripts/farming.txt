@@ -178,7 +178,7 @@ module farming
         EatType = candrink,
         StaticModel = MayoJar,
         WorldStaticModel = MayoJar_Ground,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
     
 /**********************************************************************/

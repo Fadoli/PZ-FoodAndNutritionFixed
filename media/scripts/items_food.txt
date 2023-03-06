@@ -2135,7 +2135,7 @@ item Lemon
 		Weight = 0.1,
 		Icon = ChickenFried,
 		EvolvedRecipe = Sandwich:15;Sandwich Baguette:15;Burger:15;Salad:15;Taco:15;Burrito:15,
-		FoodType = NoExplicit,
+		FoodType = Poultry,
 		DaysFresh = 2,
 		DaysTotallyRotten = 4,
 		HungerChange = -15,
@@ -3392,7 +3392,7 @@ item Pancakes
 		Weight = 0.2,
 		Icon = Chocolate,
 		EvolvedRecipe = Cake:20;PieSweet:20;Bread:10;ConeIcecream:5,
-		FoodType = NoExplicit,
+		FoodType = Chocolate,
 		Packaged = TRUE,
 		HungerChange = -20,
 		UnhappyChange = -10,
@@ -3497,7 +3497,7 @@ item Pancakes
 		Icon = Ginseng,
 		EvolvedRecipe = Beverage:1;Beverage2:1;HotDrink:1;HotDrinkRed:1;HotDrinkWhite:1;HotDrinkSpiffo:1;HotDrinkTea:1,
 		Spice = true,
-		FoodType = NoExplicit,
+		FoodType = Herb,
 		EnduranceChange = 2,
 		Tooltip = Tooltip_Ginseng,
 		HungerChange = -1,
@@ -3556,7 +3556,7 @@ item Pancakes
 		Icon = Violets,
 		EvolvedRecipe = Salad:2;HotDrink:2;HotDrinkRed:2;HotDrinkWhite:2;HotDrinkSpiffo:2;HotDrinkTea:2,
 		Spice = true,
-		FoodType = NoExplicit,
+		FoodType = Herb,
 		HungerChange = -2,
 		Calories = 27,
 		Carbohydrates = 7,
@@ -3607,7 +3607,7 @@ item Pancakes
 		ThirstChange = 20,
 		UnhappyChange = 20,
 		WorldStaticModel = Salt,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 		Tags = MinorIngredient;Salt,
 	}
 
@@ -3625,7 +3625,7 @@ item Pancakes
 		ThirstChange = 20,
 		UnhappyChange = 20,
 		WorldStaticModel = Pepper,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 		Tags = MinorIngredient,
 	}
 
@@ -3802,7 +3802,7 @@ item Pancakes
 		Weight = 0.3,
 		Icon = Butter,
 		EvolvedRecipe = Pancakes:4;Waffles:4;Sandwich:4;Sandwich Baguette:4;Stir fry Griddle Pan:4;Stir fry:4;Roasted Vegetables:4;PastaPot:4;PastaPan:4;Taco:4;Burrito:4;Toast:4;Oatmeal:4;Soup:4;Stew:4,
-		/*FoodType = NoExplicit,*/
+		FoodType = JamLike,
 		Spice = true,
 		Packaged = TRUE,
 		HungerChange = -24,
@@ -3936,7 +3936,7 @@ item Pancakes
 		Weight = 0.3,
 		Icon = PeanutButter,
 		EvolvedRecipe = Soup:5;Stir fry Griddle Pan:5;Stir fry:5;Sandwich:5;Sandwich Baguette:5;Toast:5;ConeIcecream:5,
-		FoodType = NoExplicit,
+		FoodType = JamLike,
 		Packaged = TRUE,
 		HungerChange = -25,
 		UnhappyChange = -15,
@@ -4062,6 +4062,7 @@ item Pancakes
 		CantBeFrozen = TRUE,
 		EvolvedRecipe = Beverage:2;Beverage2:2;Cake:5;Sandwich:2;Sandwich Baguette:2;FruitSalad:2;HotDrink:2;HotDrinkRed:2;HotDrinkWhite:2;HotDrinkSpiffo:2;HotDrinkTea:2;Pancakes:2;Waffles:2;ConeIcecream:2;PieSweet:5;Toast:2;Oatmeal:2,
 		Packaged = TRUE,
+        FoodType = Sugar,
 		Spice = true,
 		HungerChange = -20,
 		Calories = 760,
@@ -4156,7 +4157,7 @@ item Pancakes
 		Lipids = 12,
 		Proteins = 13.2,
 		WorldStaticModel = Mustard,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item Ketchup
@@ -4177,7 +4178,7 @@ item Pancakes
 		Lipids = 0.6,
 		Proteins = 3.9,
 		WorldStaticModel = Ketchup,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item Marinara
@@ -4197,7 +4198,7 @@ item Pancakes
 		Lipids = 3,
 		Proteins = 3,
 		WorldStaticModel = Marinara,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item Processedcheese
@@ -4520,7 +4521,7 @@ item Pancakes
 		Lipids = 0.24,
 		Proteins = 0.16,
 		WorldStaticModel = MapleSyrup_Ground,
-		FoodType = NoExplicit,
+		FoodType = Sugar,
 	}
 
 	item MincedMeat
@@ -4624,7 +4625,7 @@ item Pancakes
 		Weight = 0.05,
 		Icon = PepperHabanero,
 		EvolvedRecipe = Pizza:2;Omelette:1;Burger:1;Soup:2;Stew:2;Stir fry Griddle Pan:2;Stir fry:2;Sandwich:1;Sandwich Baguette:1;Salad:1;Roasted Vegetables:2;PastaPot:2;PastaPan:2;RicePot:2;RicePan:2;Taco:1;Burrito:1;Beverage:1;Beverage2:1;Beer:1;Beer2:1,
-		FoodType = HotPepper,
+		FoodType = Seasoning,
 		Spice = true,
 		DaysFresh = 5,
 		DaysTotallyRotten = 8,
@@ -4644,7 +4645,7 @@ item Pancakes
 		Weight = 0.05,
 		Icon = PepperJalapeno,
 		EvolvedRecipe = Pizza:2;Omelette:1;Burger:1;Soup:2;Stew:2;Stir fry Griddle Pan:2;Stir fry:2;Sandwich:1;Sandwich Baguette:1;Salad:1;Roasted Vegetables:2;PastaPot:2;PastaPan:2;RicePot:2;RicePan:2;Taco:1;Burrito:1;Beverage:1;Beverage2:1;Beer:1;Beer2:1,
-		FoodType = HotPepper,
+		FoodType = Seasoning,
 		Spice = true,
 		DaysFresh = 5,
 		DaysTotallyRotten = 8,
@@ -4828,7 +4829,7 @@ item Pancakes
 		Carbohydrates = 23,
 		Lipids = 5.5,
 		Proteins = 1.12,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item Baloney
@@ -4879,7 +4880,7 @@ item Pancakes
 		Weight = 0.1,
 		Icon = Cornbread,
 		EvolvedRecipe = Soup:5;Stew:5,
-		FoodType = NoExplicit,
+		FoodType = Bread,
 		DaysFresh = 3,
 		DaysTotallyRotten = 5,
 		HungerChange = -10,
@@ -4900,7 +4901,7 @@ item Pancakes
 		Weight = 0.2,
 		Icon = JamFruit,
 		EvolvedRecipe = Sandwich:3;Sandwich Baguette:3;Pancakes:5;Waffles:5;ConeIcecream:5;Cake:15;Toast:3;Bread:15;Oatmeal:3,
-		FoodType = NoExplicit,
+		FoodType = JamLike,
 		HungerChange = -30,
 		UnhappyChange = -10,
 		Calories = 550,
@@ -4918,7 +4919,7 @@ item Pancakes
 		Weight = 0.2,
 		Icon = JamMarmalade,
 		EvolvedRecipe = Sandwich:3;Sandwich Baguette:3;Pancakes:5;Waffles:5;ConeIcecream:5;Cake:15;Toast:3;Bread:15;Oatmeal:3,
-		FoodType = NoExplicit,
+		FoodType = JamLike,
 		HungerChange = -30,
 		UnhappyChange = -10,
 		Calories = 550,
@@ -4936,7 +4937,7 @@ item Pancakes
 		Weight = 0.05,
 		Icon = Marshmallows,
 		EvolvedRecipe = Cake:5;Pancakes:5;Waffles:5;ConeIcecream:5;PieSweet:5,
-		FoodType = NoExplicit,
+		FoodType = Candy,
 		HungerChange = -5,
 		UnhappyChange = -5,
 		Calories = 188,
@@ -5351,7 +5352,7 @@ item Pancakes
 		Weight = 1,
 		Icon = Pumpkin,
 		EvolvedRecipe = PieSweet:20,
-		FoodType = NoExplicit,
+		FoodType = Vegetables,
 		DaysFresh = 5,
 		DaysTotallyRotten = 8,
 		HungerChange = -50,
@@ -5389,7 +5390,7 @@ item Pancakes
 		Weight = 0.1,
 		Icon = ChickenNuggets,
 		EvolvedRecipe = Sandwich:5;Sandwich Baguette:5;Burger:10;Salad:5;Taco:5;Burrito:10,
-		FoodType = NoExplicit,
+		FoodType = Poultry,
 		DaysFresh = 5,
 		DaysTotallyRotten = 8,
 		HungerChange = -12,
@@ -5450,7 +5451,7 @@ item Pancakes
 		Lipids = 15,
 		Proteins = 2,
 		WorldStaticModel = Guacamole_Ground,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item LicoriceBlack
@@ -5959,7 +5960,7 @@ item Pancakes
 		WorldStaticModel = BouillionCube_Ground,
 		Tags = DriedFood;HerbalTea,
 		EvolvedRecipeName = Bouillon,
-		FoodType = Stock,
+		FoodType = Seasoning,
 	}
 
 	item CandyCorn
@@ -6245,7 +6246,7 @@ item Pancakes
 		WorldStaticModel = Ginger_Ground,
 		EvolvedRecipeName = Ginger,
 		Tags = HerbalTea,
-		FoodType = NoExplicit,
+		FoodType = Seasoning,
 	}
 
 	item Thistle
@@ -6297,7 +6298,7 @@ item Pancakes
 		Weight = 0.5,
 		Icon = Lard,
 		EvolvedRecipe = Sandwich:2;Sandwich Baguette:2;Stir fry Griddle Pan:4;Stir fry:4;Roasted Vegetables:4;PastaPot:4;PastaPan:4;Taco:2;Burrito:2;Toast:2;Soup:4;Stew:4,
-		FoodType = NoExplicit,
+		FoodType = Oil,
 		Spice = true,
 		Packaged = TRUE,
 		HungerChange = -50,
@@ -6318,7 +6319,7 @@ item Pancakes
 		Weight = 0.5,
 		Icon = Margerine,
 		EvolvedRecipe = Pancakes:4;Waffles:4;Sandwich:2;Sandwich Baguette:2;Stir fry Griddle Pan:4;Stir fry:4;Roasted Vegetables:4;PastaPot:4;PastaPan:4;Taco:2;Burrito:2;Toast:2;Oatmeal:2,
-		FoodType = NoExplicit,
+		FoodType = Oil,
 		Spice = true,
 		Packaged = TRUE,
 		HungerChange = -40,
@@ -6608,7 +6609,7 @@ item Pancakes
 		Carbohydrates = 38,
 		Lipids = 1,
 		Proteins = 8.6,
-		FoodType = NoExplicit,
+		FoodType = Vegetables,
 		EvolvedRecipeName = Tomato,
         WorldStaticModel = TomatoPaste_Ground,
 		Tags = PizzaSauce,

@@ -40,6 +40,15 @@ const CONSTANTS = {
         'Berry': {
 
         },
+        'Oil': {
+
+        },
+        'JamLike': {
+
+        },
+        'Seasoning': {
+
+        },
         'Meats': {
 
         },
@@ -58,29 +67,53 @@ const CONSTANTS = {
         'Treats': {
 
         },
-        'Drinks': {
+        'Bread': {
 
         },
-        'Candys': {
+        'Drinks': {
 
         }
     },
-    FoodType: [
-        'Greens', 'Herb', 'Vegetables',
-        'Fruits', 'Berry', 'Juice',
-        'Citrus', 'HotPepper',
-        'Bean', 'Seed', 'Nut',
-        'Oil',
-        'Mushroom',
-        'Rice', 'Pasta', 'Poultry', 'Bread',
-        'Sugar', 'Candy', 'Chocolate', 'Cocoa', 'Stock',
-        'Fish', 'Seafood',
-        'Meat', 'Game', 'Beef', 'Sausage', 'Bacon',
-        'Egg',
-        'Cheese',
-        'SoftDrink', 'Coffee', 'Beer', 'Wine',
-        'NoExplicit'
-    ],
+    FoodTypeToConfigMap: {
+        Greens: 'Vegetables',
+        Herb: 'Vegetables',
+        Vegetables: 'Vegetables',
+        Fruits: 'Fruits',
+        Citrus: 'Fruits',
+        Berry: 'Berry',
+        JamLike: 'JamLike',
+        Seasoning: 'Seasoning',
+        Juice: 'Fruits',
+        Bean: 'Grains',
+        Seed: 'Grains',
+        Nut: 'Grains',
+        Oil: 'Oil',
+        Mushroom: 'Mushroom',
+        Rice: 'Grains',
+        Pasta: 'Grains',
+        Bread: 'Bread',
+        Sugar: 'Treats',
+        Candy: 'Treats',
+        Chocolate: 'Treats',
+        Cocoa: 'Treats',
+        Fish: 'Fish',
+        Seafood: 'Fish',
+        Poultry: 'Meats',
+        Meat: 'Meats',
+        Game: 'Meats',
+        Beef: 'Meats',
+        Sausage: 'Meats',
+        Bacon: 'Meats',
+        Egg: 'Egg',
+        Cheese: 'Cheese',
+        Milk: 'Drinks',
+        Liquor: 'Drinks',
+        SoftDrink: 'Drinks',
+        Coffee: 'Drinks',
+        Beer: 'Drinks',
+        Wine: 'Drinks'
+    },
+
     scalableProperties: ['HungerChange', 'ThirstChange', 'Carbohydrates', 'Proteins', 'Lipids', 'Calories'],
 }
 
@@ -229,6 +262,12 @@ function toScript(content, prefix = '') {
     return output.join('\n');
 }
 
+/**
+ * @description Compare patched/raw files and make a diff
+ * @param {*} base
+ * @param {*} moded
+ * @return {*} 
+ */
 function comparePatch(base, moded) {
     let output = {};
     let hadDif = false;
@@ -275,19 +314,52 @@ fs.writeFileSync('output.txt', back);
 //*/
 
 //*
+const recipes = {};
+const typesToRecipes = {};
+
 const filesToCheck = ['farming.txt', 'items_food.txt'];
 let output = {};
 for (const file of filesToCheck) {
     const orig = toJS(fs.readFileSync('./originals/' + file, 'utf8'))
     const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
-    // fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig,moded),null,4));
-
+    // Compare patched content with original
+    /*
+    fs.writeFileSync(`./changed_${file}`, JSON.stringify(comparePatch(orig, moded), null, 4));
+    //*/
     const moduleName = Object.keys(orig)[0];
     output[moduleName] = output[moduleName] || {};
     let current = output[moduleName];
 
-    console.log("Originals")
 
+    // List recipes
+    //*
+    const handler = moded[moduleName];
+    for (const elementName in handler) {
+        const element = handler[elementName];
+        if (element.__type__ === 'item' && element.Type === 'Food' && element.EvolvedRecipe) {
+            Object.keys(element.EvolvedRecipe).forEach((recipe) => {
+                const oldType = element.FoodType;
+                const myNewType = CONSTANTS.FoodTypeToConfigMap[element.FoodType];
+
+                recipes[recipe] = recipes[recipe] || {};
+                typesToRecipes[oldType] = typesToRecipes[oldType] || {};
+
+                if (!myNewType) {
+                    if (!element.FoodType) {
+                        console.log(element);
+                    }
+                    console.log(element.FoodType);
+                    process.exit(0);
+                }
+                recipes[recipe][oldType] = true
+                typesToRecipes[oldType][recipe] = true
+            })
+        }
+    }
+    //*/
+
+    // Meta-Score for hunger/thirst
+    /*
     let name = `Originals`;
     const handlerOrig = orig[moduleName];
     for (const elementName in handlerOrig) {
@@ -298,7 +370,6 @@ for (const file of filesToCheck) {
         }
     }
 
-    console.log("Modded")
     name = `Modded`;
     const handler = moded[moduleName];
     current = output[moduleName];
@@ -309,9 +380,12 @@ for (const file of filesToCheck) {
             current[elementName][name] = (-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight);
         }
     }
+    //*/
 
     // Order
     output[moduleName] = Object.fromEntries(Object.entries(output[moduleName]).sort())
 }
+console.log(Object.fromEntries(Object.entries(recipes).sort()));
+console.log(Object.fromEntries(Object.entries(typesToRecipes).sort()));
 console.log(output);
 //*/
