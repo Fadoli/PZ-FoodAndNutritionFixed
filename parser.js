@@ -297,7 +297,7 @@ fs.writeFileSync('output.txt', back);
 
 const filesToCheck = ['farming.txt', 'items_food.txt'];
 
-// Auto fill values
+// Auto fill "EvolvedRecipe" values
 /*
 for (const file of filesToCheck) {
     const moded = toJS(fs.readFileSync('./media/scripts/' + file, 'utf8'))
@@ -370,7 +370,7 @@ for (const file of filesToCheck) {
     //*/
 
     // Meta-Score for hunger/thirst
-    /*
+    //*
     let name = `Originals`;
     const handlerOrig = orig[moduleName];
     for (const elementName in handlerOrig) {
@@ -391,13 +391,21 @@ for (const file of filesToCheck) {
             current[elementName][name] = (-((element.HungerChange || 0) + (element.ThirstChange || 0)) / element.Weight);
         }
     }
+    
+    for (const elementName in handlerOrig) {
+        if (!handler[elementName]) {
+            handler[elementName] = handlerOrig[elementName]
+        }
+    }
+
+    fs.writeFileSync(`./new_${file}`, toScript(handler));
     //*/
 
     // Order
-    output[moduleName] = Object.fromEntries(Object.entries(output[moduleName]).sort())
+    // output[moduleName] = Object.fromEntries(Object.entries(output[moduleName]).sort())
 }
 //console.log(Object.fromEntries(Object.entries(recipes).sort()));
 // console.log(Object.fromEntries(Object.entries(typesToRecipes).sort()));
-//fs.writeFileSync('output.txt', JSON.stringify(Object.fromEntries(Object.entries(typesToRecipes).sort()), null, 4));
-console.log(output);
+// fs.writeFileSync('output.txt', JSON.stringify(Object.fromEntries(Object.entries(typesToRecipes).sort()), null, 4));
+// console.log(output);
 //*/
