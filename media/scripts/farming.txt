@@ -10,6 +10,7 @@ module farming
         DisplayCategory = Food,
         Type = Food,
         DisplayName = Seeding Broccoli,
+        EvolvedRecipe = Pizza:10;Burger:10;Omelette:10;Soup:10;Stew:10;Pie:10;Stir fry Griddle Pan:10;Stir fry:10;Salad:10;Roasted Vegetables:10;RicePot:10;RicePan:10;PastaPot:10;PastaPan:10,
         Icon = TZ_BloomingBroccoli,
         Weight = 0.1,
         HungerChange = -10,
