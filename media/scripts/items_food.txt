@@ -7797,10 +7797,10 @@ module Base
         DaysFresh = 10,
         DaysTotallyRotten = 15,
         HungerChange = -10,
-        Calories = 30,
-        Carbohydrates = 1,
-        Lipids = 1,
-        Proteins = 5,
+        Calories = 149,
+        Carbohydrates = 11,
+        Lipids = 8,
+        Proteins = 8.5,
         WorldStaticModel = Yogurt,
     }
 
